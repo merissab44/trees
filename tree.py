@@ -4,6 +4,10 @@ class Node:
         self.value = value
         self.left = None
         self.right = None
+
+    def __repr__(self) -> str:
+    #  return value of node
+        return str(self.value)
     #  create add node method
     def add_node(self, value):
         if value < self.value:
@@ -31,7 +35,29 @@ def reverse_tree(root):
     reverse_tree(root.right)
     root.left, root.right = root.right, root.left
     return root
-    
+
+def find_sum(root, target):
+    if root is None:
+        return
+    find_sum(root.left, target)
+    if root.left is not None and root.right is not None:
+        if root.left.value + root.right.value == target:
+            print(root.left.value, root.right.value)
+    find_sum(root.right, target)
+
+def max_sum_path(root, max_val):
+    if not root:
+        return 0
+    left_path = max_sum_path(root.left)
+    right_path = max_sum_path(root.right)
+    max_val.append(max(root.val, root.val + left_path, root.val + right_path, root.val + left_path + right_path))
+    return max(root.val, root.val + left_path, root.val + right_path, root.val + left_path + right_path)
+
+def max_path(root):
+    max_vals = []
+    max_sum_path(root, max_vals)
+    return max(max_vals)
+
 # test cases
 root = Node(10)
 root.add_node(5)
@@ -51,3 +77,4 @@ print("Original Tree:")
 root.print_tree()
 print("Reversed Tree:")
 print(reverse_tree(root))
+print(find_sum(root,17))
