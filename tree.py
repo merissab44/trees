@@ -87,6 +87,25 @@ def super_balanced(root):
     find_depth(root, 0, depth_list)
     return max(depth_list) - min(depth_list) <= 1
 
+def traverse_tree(root, ol):
+    if root:
+        traverse_tree(root.left)
+        ol.append(root)
+        traverse_tree(root.right)
+
+def convert_tree_to_list(root):
+    ol = []
+    traverse_tree(root, ol)
+    for node in range(len(ol)):
+        if node == 0:
+            ol[node].left = None
+        else :
+            ol[node].left = ol[node - 1]
+        if node == len(ol) - 1:
+            ol[node].right == None
+        else :
+            ol[node].right = ol[node + 1]
+
 # test cases
 root = Node(10)
 root.add_node(5)
