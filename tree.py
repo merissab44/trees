@@ -58,6 +58,35 @@ def max_path(root):
     max_sum_path(root, max_vals)
     return max(max_vals)
 
+def isBalanced(root):
+    if root == None:
+        return False
+
+    if root.left != None and root.left.value > root.value:
+        return False
+
+    if root.right != None and root.right.value < root.value:
+        return False
+
+    if (isBalanced(root.left) == False or isBalanced(root.right) == False):
+        return False
+
+    # return true if all conditions are met
+    return True
+
+def find_depth(root, current_depth, depth_list):
+    if root.left:
+        find_depth(root.left, current_depth + 1, depth_list)
+    if root.right:
+        find_depth(root.right, current_depth + 1, depth_list)
+    if not root.left and not root.right:
+        depth_list.append(current_depth)
+
+def super_balanced(root):
+    depth_list = []
+    find_depth(root, 0, depth_list)
+    return max(depth_list) - min(depth_list) <= 1
+
 # test cases
 root = Node(10)
 root.add_node(5)
